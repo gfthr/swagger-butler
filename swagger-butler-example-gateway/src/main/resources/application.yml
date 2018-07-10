@@ -1,0 +1,56 @@
+server:
+  port: 11003
+
+spring:
+  application:
+    name: swagger-butler-example-gateway
+
+  cloud:
+    gateway:
+      routes:
+      - id: example-static
+        uri: http://127.0.0.1:11000
+        predicates:
+        - Path=/example/static/**
+        filters:
+        - RewritePath=/example/static/(?<segment>.*), /$\{segment}
+      - id: example-eureka
+        uri: http://127.0.0.1:11001
+        predicates:
+        - Path=/example/eureka/**
+        filters:
+        - RewritePath=/example/eureka/(?<segment>.*), /$\{segment}
+      - id: example-consul
+        uri: http://127.0.0.1:11002
+        predicates:
+        - Path=/example/consul/**
+        filters:
+        - RewritePath=/example/consul/(?<segment>.*), /$\{segment}
+
+#     The website httpbin has an Swagger2.0 document at http://httpbin.org/spec.json,
+#     But CANT find it because this website is not compatible with springfox
+      - id: httpbin
+        uri: http://httpbin.org/
+        predicates:
+        - Path=/httpbin/**
+        filters:
+        - RewritePath=/httpbin/(?<segment>.*), /$\{segment}
+
+#     The website baidu NOT has any Swagger2.0 document,
+#     So cant generate
+      - id: baidu
+        uri: http://www.baidu.com
+        predicates:
+        - Path=/baidu/**
+        filters:
+        - RewritePath=/baidu/(?<segment>.*), /$\{segment}
+
+
+logging:
+  level:
+    org.springframework.cloud.gateway: TRACE
+
+
+swagger:
+  butler:
+    gateway:

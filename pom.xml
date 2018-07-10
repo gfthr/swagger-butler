@@ -18,9 +18,11 @@
 
     <modules>
         <module>swagger-butler-core</module>
+        <module>swagger-butler-gateway</module>
         <module>swagger-butler-example-static</module>
         <module>swagger-butler-example-eureka</module>
         <module>swagger-butler-example-consul</module>
+        <module>swagger-butler-example-gateway</module>
     </modules>
 
 </project>
